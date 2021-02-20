@@ -1,0 +1,36 @@
+server:
+  port: 8089
+  servlet:
+    context-path: /examination
+
+#指定应用名称
+spring:
+  application:
+    name: eureka-provider
+  datasource:
+    url: jdbc:mysql://49.232.139.30:3306/cmsforstudy?useUnicode=true&characterEncoding=utf8&allowMutiQueries=true&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+      update-strategy: ignored
+      select-strategy: default
+      insert-strategy: default
+  mapper-locations: classpath*:cn/hw/**/mapper/xml/*Mapper.xml
+
+sso:
+  key:
+    publicKeyPath: /key/rsa_key.pub
+    privateKeyPath: /key/rsa_key.pri
+
+
+
+
