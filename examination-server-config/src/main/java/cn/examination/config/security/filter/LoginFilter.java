@@ -107,7 +107,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
             Map<String, Object> map = new HashMap<>();
             map.put("code",HttpServletResponse.SC_OK);
             map.put("msg","登录成功");
-            map.put("token","hwcms"+token);
+            map.put("token","examination"+token);
             map.put("user",user);
             //响应数据
             response.setContentType("application/json;charset=utf-8");

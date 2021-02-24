@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.hw.config.mapper.RoleMapper">
+<mapper namespace="cn.examination.config.mapper.RoleMapper">
 
-    <select id="selectRoleByUserId" resultType="cn.hw.domain.system.SysRole">
+    <select id="selectRoleByUserId" resultType="cn.examination.domain.system.SysRole">
         SELECT
             r.*
         FROM
@@ -14,7 +14,7 @@
     </select>
 
 
-    <select id="selectRoleByPermissionId" resultType="cn.hw.domain.system.SysRole">
+    <select id="selectRoleByPermissionId" resultType="cn.examination.domain.system.SysRole">
         SELECT
             r.*
         FROM

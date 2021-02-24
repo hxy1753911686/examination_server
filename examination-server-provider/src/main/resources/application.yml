@@ -8,9 +8,9 @@ spring:
   application:
     name: eureka-provider
   datasource:
-    url: jdbc:mysql://49.232.139.30:3306/cmsforstudy?useUnicode=true&characterEncoding=utf8&allowMutiQueries=true&serverTimezone=UTC
+    url: jdbc:mysql://49.232.139.30:3306/examination?useUnicode=true&characterEncoding=utf8&allowMutiQueries=true&serverTimezone=UTC
     username: root
-    password: root
+    password: cloudroot
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 mybatis-plus:
@@ -24,7 +24,7 @@ mybatis-plus:
       update-strategy: ignored
       select-strategy: default
       insert-strategy: default
-  mapper-locations: classpath*:cn/hw/**/mapper/xml/*Mapper.xml
+  mapper-locations: classpath*:cn/examination/**/mapper/xml/*Mapper.xml
 
 sso:
   key:
