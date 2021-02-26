@@ -10,7 +10,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>examination-server-config</artifactId>
-    <packaging>jar</packaging>
 
     <properties>
         <monkey-api-encrypt.version>1.2.RELEASE</monkey-api-encrypt.version>

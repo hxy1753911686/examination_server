@@ -2,10 +2,12 @@ package cn.examination.config.configuration;
 
 import cn.examination.config.security.utils.RsaUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.ResourceUtils;
 
 import javax.annotation.PostConstruct;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
@@ -30,8 +32,21 @@ public class AuthRsaKeyProperties {
      */
     @PostConstruct
     public void loadKey() throws Exception {
-        publicKey = RsaUtils.getPublicKey(publicKeyPath);
-        privateKey = RsaUtils.getPrivateKey(privateKeyPath);
+        ClassPathResource resource1 = new ClassPathResource(publicKeyPath);
+        InputStream inputStream1 = resource1.getInputStream();
+        byte[] bytes1 = new byte[inputStream1.available()];
+        inputStream1.read(bytes1); // 将流保存在bytes中
+        publicKey = RsaUtils.getPublicKey(bytes1);
+
+
+
+
+
+        ClassPathResource resource2 = new ClassPathResource(privateKeyPath);
+        InputStream inputStream2 = resource2.getInputStream();
+        byte[] bytes2 = new byte[inputStream2.available()];
+        inputStream2.read(bytes2); // 将流保存在bytes中
+        privateKey = RsaUtils.getPrivateKey(bytes2);
 
     }
 

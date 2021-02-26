@@ -19,24 +19,24 @@ public class RsaUtils {
 
     /**从文件中读取公钥
      */
-    public static PublicKey getPublicKey(String filename) throws Exception {
-
-        byte[] bytes = readFile(filename);
-        return getPublicKey(bytes);
-    }
-
-
-    /**从文件中读取密钥
-     */
-    public static PrivateKey getPrivateKey(String filename) throws Exception {
-        byte[] bytes = readFile(filename);
-        return getPrivateKey(bytes);
-
-    }
+//    public static PublicKey getPublicKey(String filename) throws Exception {
+//
+//        byte[] bytes = readFile(filename);
+//        return getPublicKey(bytes);
+//    }
+//
+//
+//    /**从文件中读取密钥
+//     */
+//    public static PrivateKey getPrivateKey(String filename) throws Exception {
+//        byte[] bytes = readFile(filename);
+//        return getPrivateKey(bytes);
+//
+//    }
 
     /**
      */
-    private static PublicKey getPublicKey(byte[] bytes) throws Exception {
+    public static PublicKey getPublicKey(byte[] bytes) throws Exception {
         bytes = Base64.getDecoder().decode(bytes);
         X509EncodedKeySpec spec = new X509EncodedKeySpec(bytes);
         KeyFactory factory = KeyFactory.getInstance("RSA");
@@ -47,7 +47,7 @@ public class RsaUtils {
 
     /**获取密钥
      */
-    private static PrivateKey getPrivateKey(byte[] bytes) throws InvalidKeySpecException, NoSuchAlgorithmException {
+    public static PrivateKey getPrivateKey(byte[] bytes) throws InvalidKeySpecException, NoSuchAlgorithmException {
         bytes = Base64.getDecoder().decode(bytes);
         PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(bytes);
         KeyFactory factory = KeyFactory.getInstance("RSA");
