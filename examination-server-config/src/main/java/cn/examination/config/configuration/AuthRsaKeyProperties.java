@@ -55,8 +55,9 @@ public class AuthRsaKeyProperties {
     }
 
     public void setPublicKeyPath(String publicKeyPath) throws FileNotFoundException {
-        String path = ResourceUtils.getURL("classpath:").getPath();
-        this.publicKeyPath = path + publicKeyPath;
+//        String path = ResourceUtils.getURL("classpath:").getPath();
+//        this.publicKeyPath = path + publicKeyPath;
+        this.publicKeyPath = publicKeyPath;
     }
 
     public String getPrivateKeyPath() {
@@ -64,8 +65,9 @@ public class AuthRsaKeyProperties {
     }
 
     public void setPrivateKeyPath(String privateKeyPath) throws FileNotFoundException {
-        String path = ResourceUtils.getURL("classpath:").getPath();
-        this.privateKeyPath = path + privateKeyPath;
+//        String path = ResourceUtils.getURL("classpath:").getPath();
+//        this.privateKeyPath = path + privateKeyPath;
+        this.privateKeyPath = privateKeyPath;
     }
 
     public PublicKey getPublicKey() {
