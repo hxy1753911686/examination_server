@@ -4,6 +4,7 @@ import cn.examination.config.common.Result;
 import cn.examination.config.security.utils.JsonUtils;
 import cn.examination.config.vo.UserAuthVo;
 import cn.examination.domain.question.Examination;
+import cn.examination.domain.question.ExaminationAnswer;
 import cn.examination.service.QuestionService;
 import cn.examination.vo.ExaminationVo;
 import com.alibaba.fastjson.JSONArray;
@@ -60,6 +61,18 @@ public class QuestionController {
     public Result searchByCode(@RequestBody String code){
         ExaminationVo examinationVo = questionService.searchByCode(code);
         return Result.success(examinationVo);
+    }
+
+    /**
+     * 保存问卷答案
+     */
+    @PostMapping("/saveAnswer")
+    public Result saveAnswer(@RequestBody List<ExaminationAnswer> examinationAnswerList){
+        questionService.saveAnswer(examinationAnswerList);
+        for (ExaminationAnswer examinationAnswer : examinationAnswerList) {
+            System.err.println(examinationAnswer);
+        }
+        return Result.success();
     }
 
 
