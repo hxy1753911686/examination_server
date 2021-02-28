@@ -9,4 +9,6 @@ public interface QuestionService {
     List<Examination> searchAllQuestion(String createUser);
 
     void addQuestion(ExaminationVo examinationVo);
+
+    ExaminationVo searchByCode(String code);
 }

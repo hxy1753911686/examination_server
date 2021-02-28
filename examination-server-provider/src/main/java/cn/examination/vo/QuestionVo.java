@@ -10,5 +10,6 @@ public class QuestionVo {
     private Integer order;
     private String question;
     private String type;
+    private String model;
     private List<AnswerVo> answer;
 }

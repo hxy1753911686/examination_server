@@ -11,6 +11,7 @@ import cn.examination.vo.AnswerVo;
 import cn.examination.vo.ExaminationVo;
 import cn.examination.vo.QuestionVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -18,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.beans.Transient;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -73,5 +75,51 @@ public class QuestionServiceImpl implements QuestionService {
             }
 
         }
+    }
+
+    @Override
+    public ExaminationVo searchByCode(String code) {
+        // 根据code，获取问卷
+        Examination examination = new Examination();
+        QueryWrapper<Examination> wrapper = new QueryWrapper<>();
+        wrapper.eq("code",code);
+        examination = (Examination) examination.selectOne(wrapper);
+
+        ExaminationVo examinationVo = new ExaminationVo();
+        if(examination.getId() != null){
+            BeanUtils.copyProperties(examination,examinationVo);
+
+            // 根据问卷id，查找rela
+            ExaminationRela examinationRela = new ExaminationRela();
+            QueryWrapper<ExaminationRela> relaWrapper = new QueryWrapper<>();
+            relaWrapper.eq("examination_id",examination.getId());
+            List<ExaminationRela> relaList = examinationRela.selectList(relaWrapper);
+
+            List<QuestionVo> questionVoList = new ArrayList<>();
+            for (ExaminationRela rela : relaList) {
+                QuestionVo questionVo = new QuestionVo();
+                BeanUtils.copyProperties(rela,questionVo);
+                questionVo.setOrder(rela.getQuestionOrder());
+                questionVo.setModel("question"+questionVo.getOrder());
+
+                // 根据rela id，查找ansdef
+                QueryWrapper<ExaminationAnsdef> ansdefWrapper = new QueryWrapper<>();
+                ansdefWrapper.eq("rela_id",rela.getId());
+                List<ExaminationAnsdef> examinationAnsdefList = examinationAnsdefMapper.selectList(ansdefWrapper);
+
+                List<AnswerVo> answerVoList = new ArrayList<>();
+                for (ExaminationAnsdef ansdef : examinationAnsdefList) {
+                    AnswerVo answerVo = new AnswerVo();
+                    BeanUtils.copyProperties(ansdef,answerVo);
+                    answerVoList.add(answerVo);
+                }
+                questionVo.setAnswer(answerVoList);
+
+                questionVoList.add(questionVo);
+            }
+            examinationVo.setQuestionVoList(questionVoList);
+        }
+
+        return examinationVo;
     }
 }

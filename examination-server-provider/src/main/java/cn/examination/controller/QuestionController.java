@@ -56,10 +56,10 @@ public class QuestionController {
     /**
      * 查看单个问卷信息
      */
-    @PostMapping("/code")
+    @PostMapping("/getInfo")
     public Result searchByCode(@RequestBody String code){
-//        questionService.searchByCode();
-        return Result.success();
+        ExaminationVo examinationVo = questionService.searchByCode(code);
+        return Result.success(examinationVo);
     }
 
 

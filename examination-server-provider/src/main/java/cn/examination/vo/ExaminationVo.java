@@ -10,6 +10,8 @@ public class ExaminationVo {
 
     private String title;
 
+    private String code;
+
     private List<QuestionVo> questionVoList;
 
 }
