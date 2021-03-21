@@ -95,8 +95,8 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         user.setAvatar(userDetails.getAvater());
         user.setAuthorities((List<SimpleGrantedAuthority>) authResult.getAuthorities());
 
-        //使用jwt创建一个token，私钥加密
-        String token = JwtUtils.generateTokenExpireInMinutes(user,prop.getPrivateKey(),15);
+        //使用jwt创建一个token，私钥加密，失效时间30分钟
+        String token = JwtUtils.generateTokenExpireInMinutes(user,prop.getPrivateKey(),30);
 
         //返回token
         response.addHeader("Authorization","examination"+token);
@@ -126,6 +126,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
      */
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+        PrintWriter writer = null;
         try {
             //生成消息
             Map<String, Object> map = new HashMap<>();
@@ -134,12 +135,16 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
             //响应数据
             response.setContentType("application/json;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            PrintWriter writer = response.getWriter();
+            writer = response.getWriter();
             writer.write(new ObjectMapper().writeValueAsString(map));
-            writer.flush();
-            writer.close();
+
         }catch (Exception e) {
             throw new RuntimeException(e);
+        }finally {
+            if(writer != null){
+                writer.flush();
+                writer.close();
+            }
         }
     }
 }
