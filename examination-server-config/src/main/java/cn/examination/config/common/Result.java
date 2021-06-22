@@ -1,17 +1,30 @@
 package cn.examination.config.common;
 
 public class Result {
-    private Integer code;
 
+    private Integer code = StatusCode.SUCCESS.getCode();
     /**
      * 消息内容
      */
-    private String message;
-
+    private String message = "";
     /**
      * 返回数据
      */
     private Object data = null;
+
+    private static ThreadLocal<Result> resultLocalVar = new ThreadLocal<>();
+
+    // 每个线程一个Result
+    public static synchronized Result getLocalObject(){
+        if(null == resultLocalVar.get()){
+            resultLocalVar.set(new Result());
+        }
+        return resultLocalVar.get();
+    }
+
+    public Result(){
+
+    }
 
     public Result(Integer code, String message, Object data) {
         this.code = code;
@@ -22,6 +35,35 @@ public class Result {
     public Result(Integer code, String message) {
         this.code = code;
         this.message = message;
+    }
+
+    /***
+     *
+     * @description: 清空threadLocal中数据，为了防止内存泄漏，在结束请求之前需要调用
+     * @param
+     * @return void
+     * @author: hanxiangyu
+     * @dateTime: 2021/6/22 7:01 下午
+     */
+    public static void clear(){
+        resultLocalVar.remove();
+    }
+
+    /***
+     *
+     * @description: 向result对象塞值
+     * @param code
+     * @param message
+     * @param data
+     * @return void
+     * @author: hanxiangyu
+     * @dateTime: 2021/6/22 7:07 下午
+     */
+    public static void putValue(Integer code, String message, Object data){
+        Result result = getLocalObject();
+        result.setCode(code);
+        result.setMessage(message);
+        result.setData(data);
     }
 
     public static Result expired(String message) {
@@ -56,13 +98,6 @@ public class Result {
         return new Result(StatusCode.SUCCESS.getCode(), message, data);
     }
 
-    public static Result build(Integer code, String msg, Object data) {
-        return new Result(code, msg, data);
-    }
-
-    public static Result build(Integer code, String msg) {
-        return new Result(code, msg);
-    }
 
     public Integer getCode() {
         return code;

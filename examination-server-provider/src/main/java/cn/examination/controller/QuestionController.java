@@ -9,6 +9,9 @@ import cn.examination.service.QuestionService;
 import cn.examination.vo.ExaminationVo;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,6 +27,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/question")
+@Api(tags ={"问卷调查"})
 public class QuestionController {
 
     @Autowired
@@ -33,6 +37,7 @@ public class QuestionController {
      * 获取问卷集合
      */
     @PostMapping("/list")
+    @ApiOperation(value = "获取问卷集合",response = Result.class)
     public Result list(HttpServletRequest request) {
         Authentication authentication = (Authentication) request.getUserPrincipal();
         UserAuthVo userAuthVo = (UserAuthVo) authentication.getPrincipal();

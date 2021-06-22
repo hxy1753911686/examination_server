@@ -31,6 +31,10 @@ sso:
     publicKeyPath: /key/rsa_key.pub
     privateKeyPath: /key/rsa_key.pri
 
+swagger:
+  basepackage: cn.examination.controller
+  title: "api接口文档"
+
 
 
 
